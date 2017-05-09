@@ -9,6 +9,7 @@ Cependant, alors qu'Heidi ne parle que le romanche, Tita ne comprend qu'un langa
 Vous écrirez dans ce TP des traducteurs, leur permettant de communiquer.
 Vous donnerez la syntaxe abstraite et la sémantique à la fois sous forme de règles d'inférences,
 et sous forme de code Swift ou Prolog.
+Le code devra bien entendu être commenté et testé.
 
 Tita a été bien dressée,
 et comprend les sifflets standards.
