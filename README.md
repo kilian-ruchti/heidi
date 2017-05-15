@@ -101,7 +101,7 @@ retourne le programme d'origine.
 
 ## Accélération
 
-Au bout de quelques jours à diriger Freyja,
+Au bout de quelques jours à diriger Tita,
 Heidi prend confiance et réduit de plus en plus les pauses entre ses ordres.
 Arrive le moment où elle supprime totalement ces pauses.
 
