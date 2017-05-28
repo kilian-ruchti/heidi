@@ -1,4 +1,8 @@
-%%% Abstract syntax
+%%%-----------------------------------------------------------------------------
+%%% Optimisation
+%%%-----------------------------------------------------------------------------
+%% De Heidi
+
 %% De Heidi
 % List of orders.
 
@@ -31,16 +35,11 @@ heidi_sequence([H|T]) :-
 
 
 %%%-----------------------------------------------------------------------------
-%%  De Tita
-% List of whistles.
+%% De Tita
 
-t_whistle(court).
-t_whistle(whee).
 t_whistle(wheet).
 t_whistle(wheeo).
-t_whistle(who).
 t_whistle(hee).
-t_whistle(long).
 t_pause(pause).
 
 
@@ -69,25 +68,21 @@ work_sequence(X) :-
 work_sequence(X) :-
     append(Whistle_head, Whistle_tail, X),
     tita_sequence(Whistle_head),
-    Whistle_tail = [Y|Tail],
-    t_pause(Y),
-    work_sequence(Tail).
+    work_sequence(Whistle_tail).
 
 
 %%%-----------------------------------------------------------------------------
-%%% Sémantique
 %% De Heidi a Tita
-% Translations from Romanche to wistles.
+% New translations from Romanche to wistles.
 
-translation('deponer', [court,court]).
-translation('dretg', [whee, who]).
+translation('deponer', [wheeo, hee, wheet]).
+translation('dretg', [hee, wheet]).
 translation('sanester', [wheet, wheeo]).
-translation('davent', [wheet, wheeo, wheet, wheet]).
-translation('davos', [who, hee, who]).
-translation('plaun', [hee, hee, hee, hee]).
-translation('returnar', [whee, whee, wheet]).
-translation('sa fermar', [long]).
-
+translation('davent', [wheet, hee, wheet]).
+translation('davos', [wheet, wheeo, wheet]).
+translation('plaun', [wheet, wheeo, wheeo]).
+translation('returnar', [wheeo, wheet]).
+translation('sa fermar', [wheeo, wheeo]).
 
 % To translate an order to tita
 heidi_to_tita(Ord, Whis) :-
@@ -101,9 +96,7 @@ heidi_to_tita(Ord, Whis) :-
     Ord = [Orders_head|Orders_tail],
     append(Whistle_head, Whistle_tail, Whis),
     translation(Orders_head, Whistle_head),
-    Whistle_tail = [A|B],
-    t_pause(A),
-    heidi_to_tita(Orders_tail, B).
+    heidi_to_tita(Orders_tail, Whistle_tail).
 
 
 %%%-----------------------------------------------------------------------------
@@ -111,3 +104,11 @@ heidi_to_tita(Ord, Whis) :-
 
 tita_to_heidi(Whis, Ord) :-
     heidi_to_tita(Ord, Whis).
+
+
+%%%-----------------------------------------------------------------------------
+heidi_to_tita_to_heidi(Orders) :-
+    heidi_to_tita(Orders, X),
+    tita_to_heidi(X, Y),
+    Orders == Y,
+    !.
