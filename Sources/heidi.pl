@@ -1,4 +1,4 @@
-%%% Abstract syntax
+%% Abstract syntax
 %% De Heidi
 % List of orders.
 
@@ -9,7 +9,7 @@ h_order('davent').
 h_order('davos').
 h_order('plaun').
 h_order('returnar').
-h_order('sa fermar').
+h_order('sa_fermar').
 
 
 % To see if an order is known.
@@ -29,8 +29,18 @@ heidi_sequence([H|T]) :-
     heidi_order(H),
     heidi_sequence(T).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- h_order(davent).
+?- h_order(X).
+
+?- heidi_sequence(deponer).
+?- heidi_sequence([deponer,davent]).
+?- heidi_sequence([dretg,davos,sa_fermar]).
+*/
+
+%%-----------------------------------------------------------------------------
 %%  De Tita
 % List of whistles.
 
@@ -73,9 +83,22 @@ work_sequence(X) :-
     t_pause(Y),
     work_sequence(Tail).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
-%%% Sémantique
+?- t_whistle(whee).
+?- t_whistle(X).
+
+?- tita_sequence([hee]).
+?- tita_sequence([wheeo, hee, long]).
+
+?- seance_travail([court, whee]).
+?- seance_travail([court, whee, pause]).
+?- seance_travail([wheeo, hee, pause, long, court, pause, who]).
+*/
+
+%%-----------------------------------------------------------------------------
+%% Sémantique
 %% De Heidi a Tita
 % Translations from Romanche to wistles.
 
@@ -86,7 +109,7 @@ translation('davent', [wheet, wheeo, wheet, wheet]).
 translation('davos', [who, hee, who]).
 translation('plaun', [hee, hee, hee, hee]).
 translation('returnar', [whee, whee, wheet]).
-translation('sa fermar', [long]).
+translation('sa_fermar', [long]).
 
 
 % To translate an order to tita
@@ -105,9 +128,25 @@ heidi_to_tita(Ord, Whis) :-
     t_pause(A),
     heidi_to_tita(Orders_tail, B).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- heidi_to_tita('plaun', [hee, hee, hee, hee]).
+?- heidi_to_tita([dretg, davos], [whee, who, pause, who, hee, who]).
+?- heidi_to_tita(X, [whee, who, pause, long]).
+?- heidi_to_tita(X,Y).
+*/
+
+%%-----------------------------------------------------------------------------
 %% De Tita a Heidi
 
 tita_to_heidi(Whis, Ord) :-
     heidi_to_tita(Ord, Whis).
+
+/*
+<examples of tests>
+
+?- tita_to_heidi([court, court, pause, hee, hee, hee, hee], [deponer, plaun]).
+?- tita_to_heidi([long, pause, who, hee, who], [sa_fermar, davos]).
+?- tita_to_heidi(X,Y).
+*/

@@ -1,6 +1,6 @@
-%%%-----------------------------------------------------------------------------
-%%% Optimisation
-%%%-----------------------------------------------------------------------------
+%%-----------------------------------------------------------------------------
+%% Optimisation
+%%-----------------------------------------------------------------------------
 %% De Heidi
 
 %% De Heidi
@@ -13,7 +13,7 @@ h_order('davent').
 h_order('davos').
 h_order('plaun').
 h_order('returnar').
-h_order('sa fermar').
+h_order('sa_fermar').
 
 
 % To see if an order is known.
@@ -33,14 +33,23 @@ heidi_sequence([H|T]) :-
     heidi_order(H),
     heidi_sequence(T).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- h_order(davent).
+?- h_order(X).
+
+?- heidi_sequence(deponer).
+?- heidi_sequence([deponer,davent]).
+?- heidi_sequence([dretg,davos,sa_fermar]).
+*/
+
+%%-----------------------------------------------------------------------------
 %% De Tita
 
 t_whistle(wheet).
 t_whistle(wheeo).
 t_whistle(hee).
-t_pause(pause).
 
 
 % To see if a whistle is known.
@@ -61,7 +70,7 @@ tita_sequence([H|T]) :-
     tita_sequence(T).
 
 
-% To see if a sequence in work time (sequence of whistles with pauses) is known.
+% To see if a sequence in work time (sequence of whistles) is known.
 work_sequence(X) :-
     tita_sequence(X).
 
@@ -70,8 +79,15 @@ work_sequence(X) :-
     tita_sequence(Whistle_head),
     work_sequence(Whistle_tail).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- t_whistle(hee).
+?- tita_sequence(X).
+?- seance_travail([hee, wheet, hee, wheet, wheeo]).
+*/
+
+%%-----------------------------------------------------------------------------
 %% De Heidi a Tita
 % New translations from Romanche to wistles.
 
@@ -82,7 +98,7 @@ translation('davent', [wheet, hee, wheet]).
 translation('davos', [wheet, wheeo, wheet]).
 translation('plaun', [wheet, wheeo, wheeo]).
 translation('returnar', [wheeo, wheet]).
-translation('sa fermar', [wheeo, wheeo]).
+translation('sa_fermar', [wheeo, wheeo]).
 
 % To translate an order to tita
 heidi_to_tita(Ord, Whis) :-
@@ -98,17 +114,38 @@ heidi_to_tita(Ord, Whis) :-
     translation(Orders_head, Whistle_head),
     heidi_to_tita(Orders_tail, Whistle_tail).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- heidi_to_tita('plaun', [wheet, wheeo, wheeo]).
+?- heidi_to_tita([dretg, davos], [hee, wheet, wheet, wheeo, wheet]).
+?- heidi_to_tita(X, [wheet, wheeo, wheeo, hee, wheet]).
+?- heidi_to_tita(X,Y).
+*/
+
+%%-----------------------------------------------------------------------------
 %% De Tita a Heidi
 
 tita_to_heidi(Whis, Ord) :-
     heidi_to_tita(Ord, Whis).
 
+/*
+<examples of tests>
 
-%%%-----------------------------------------------------------------------------
+?- tita_to_heidi([wheeo, hee, wheet, pause, wheet, wheeo, wheeo], [deponer, plaun]).
+?- tita_to_heidi([wheeo, wheeo, pause, wheet, wheeo, wheet], [sa_fermar, davos]).
+?- tita_to_heidi(X,Y).
+*/
+
+%%-----------------------------------------------------------------------------
 heidi_to_tita_to_heidi(Orders) :-
     heidi_to_tita(Orders, X),
     tita_to_heidi(X, Y),
     Orders == Y,
     !.
+
+/*
+<examples of tests>
+?- heidi_to_tita_to_heidi([deponer, dretg, davos, plaun, sa_fermar]).
+?- heidi_to_tita_to_heidi(X).
+*/
